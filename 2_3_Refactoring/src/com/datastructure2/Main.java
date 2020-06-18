@@ -22,5 +22,7 @@ public class Main {
 
         BST.valueFromDistance(BST.root,2);
         System.out.println(BST.getValueStack().toString());
+
+        System.out.println(BST.areSibling(12,18));
     }
 }

@@ -193,20 +193,97 @@ public class BinarySearchTree {
             return;
 //            return -1;
 
-        if (distance == 0){
+        if (distance == 0) {
             valueStack.push(root.value);
             return;
-        }
-        else {
+        } else {
             valueFromDistance(root.getLeftChild(), distance - 1);
             valueFromDistance(root.getRightChild(), distance - 1);
         }
     }
 
-    Stack<Integer> getValueStack(){
+    Stack<Integer> getValueStack() {
         return valueStack;
     }
 
+    public int size() {
+        return size(root);
+    }
+
+    private int size(Node root) {
+        if (root == null)
+            return 0;
+        if (isLeaf(root))
+            return 1;
+
+        return 1 + size(root.getLeftChild()) + size(root.getRightChild());
+    }
+
+    public int countLeaves() {
+        return countLeaves(root);
+    }
+
+    private int countLeaves(Node root) {
+        if (root == null)
+            return 0;
+        if (isLeaf(root))
+            return 1;
+        return countLeaves(root.getLeftChild()) + countLeaves(root.getRightChild());
+    }
+
+    public int max() {
+        if (root == null)
+            return -1;
+        return max(root);
+    }
+
+    private int max(Node root) {
+        if (root.getRightChild() == null)
+            return root.value;
+        return max(root);
+    }
+
+    public boolean contains(int value) {
+        return contains(root, value);
+    }
+
+    private boolean contains(Node root, int value) {
+        if (root == null)
+            return false;
+
+        if (root.value == value)
+            return true;
+        else
+            return contains(root.getLeftChild(), value) || contains(root.getRightChild(), value);
+
+    }
+
+    public boolean areSibling(int value1, int value2) {
+        return areSibling(root, value1, value2);
+    }
+
+    private boolean areSibling(Node root, int value1, int value2) {
+        if (root.getLeftChild() == null || root.getRightChild() == null)
+            return false;
+        if (root.getLeftChild().value == value1 && root.getRightChild().value == value2)
+            return true;
+        if (root.getLeftChild().value == value2 && root.getRightChild().value == value1)
+            return true;
+        return areSibling(root.getLeftChild(), value1, value2) || areSibling(root.getRightChild(), value1, value2);
+    }
+
+    private void getAncestors(Node root,int value,LinkedList linkedList){
+        if (root==null)
+            return;
+        if(root.getRightChild().value==value||root.getLeftChild().value==value){
+            linkedList.add(root.value);
+        }
+
+    }
+
+    private boolean isLeaf(Node root) {
+        return root.getLeftChild() == null && root.getRightChild() == null;
+    }
 
     private class Node {
         private int value;
