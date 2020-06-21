@@ -1,6 +1,6 @@
 package com.datastructure2;
 
-public class Main {
+public class Test_Binary_AVL_Tree {
     public static void main(String[] args) {
 
 //        -------- Lesson2 Binary Tree --------
@@ -27,19 +27,23 @@ public class Main {
 //
 //        System.out.println(BST.areSibling(12,18));
 
-//        -------- Lesson2 Binary Tree --------
+//        -------- Lesson3 AVL Tree --------
 
         AVLTree avlTree = new AVLTree();
 
+//        avlTree.insert(10);
+//        avlTree.insert(5);
+//        avlTree.insert(15);
+//        avlTree.insert(6);
+//        avlTree.insert(1);
+//        avlTree.insert(8);
+//        avlTree.insert(12);
+//        avlTree.insert(18);
+//        avlTree.insert(17);
+
         avlTree.insert(10);
-        avlTree.insert(5);
-        avlTree.insert(15);
-        avlTree.insert(6);
-        avlTree.insert(1);
-        avlTree.insert(8);
-        avlTree.insert(12);
-        avlTree.insert(18);
-        avlTree.insert(17);
+        avlTree.insert(30);
+        avlTree.insert(20);
 
         System.out.println("End");
 
