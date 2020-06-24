@@ -24,5 +24,16 @@ public class Test_Tries {
 
         System.out.println("END");
 
+        System.out.println(newTrie.contains("car"));
+
+        newTrie.insert("card");
+        newTrie.insert("care");
+        newTrie.insert("careful");
+        newTrie.insert("careless");
+
+        System.out.println(newTrie.findWords("car").toString());
+        System.out.println(newTrie.containsRecursive("canada"));
+
+
     }
 }

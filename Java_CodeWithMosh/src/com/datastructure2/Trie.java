@@ -2,11 +2,16 @@ package com.datastructure2;
 
 import com.datastructure.HashTable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Trie {
     private Node root = new Node(Character.MIN_VALUE);
     private Node current;
+    ArrayList<Character> wordArray = new ArrayList<>();
+    List<String> words = new LinkedList<>();
 
 //    public void traverse(){
 //        traverse(root);
@@ -53,7 +58,8 @@ public class Trie {
         }
         root.getChild(ch).isEndOfWord = false;
         if (root.getChild(ch).hasNoChild())
-            root.getChild(ch).value = Character.MIN_VALUE;
+            root.children.remove(ch);
+//            root.getChild(ch).value = Character.MIN_VALUE;
         return root;
     }
 
@@ -97,6 +103,67 @@ public class Trie {
             current = current.getChild(ch);
         }
         return false;
+    }
+
+    public boolean containsRecursive(String str){
+        return containsRecursive(root,str,0);
+    }
+
+    public boolean containsRecursive(Node root,String str, int index){
+        char targetChar=str.toCharArray()[index];
+        if(root.hasChild(targetChar)){
+            root=root.getChild(targetChar);
+            if(index==str.length()-1)
+                return root.isEndOfWord;
+            return containsRecursive(root,str,++index);
+        }
+        return false;
+    }
+
+    private Node findLastNode(Node root, String prefix) {
+        if(prefix==null)
+            return null;
+
+        int index = 0;
+        char targetChar = prefix.toCharArray()[index];
+        Node current = root;
+
+        while (index < prefix.length() && current.hasChild(targetChar)) {
+            current = current.getChild(targetChar);
+            if (index == prefix.length()-1)
+                return current;
+            targetChar = prefix.toCharArray()[++index];
+        }
+        throw new IllegalArgumentException("No such prefix");
+    }
+
+    public List<String> findWords(String prefix){
+        Node root=findLastNode(this.root,prefix);
+        findWords(root,prefix);
+        return words;
+    }
+
+    public void findWords(Node root, String prefix) {
+//        for(Node child: root.getChildren()){
+//            if(!child.hasNoChild()){
+//                prefix= prefix+child.value;
+//                if(child.isEndOfWord){
+//                    words.add(prefix);
+//                }
+//                findWords(child,prefix);
+//            }
+//            if(child.hasNoChild()&&child.isEndOfWord){
+//                words.add(prefix+child.value);
+//            }
+//        }
+        if(root==null)
+            return;
+
+        if(root.isEndOfWord)
+            words.add(prefix);
+
+        for(Node child:root.getChildren())
+            findWords(child,prefix+child.value);
     }
 
     private class Node {
